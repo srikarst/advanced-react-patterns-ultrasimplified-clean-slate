@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useCallback } from "react";
+import React, { useState, useCallback, useLayoutEffect } from "react";
 import mojs from "mo-js";
 import styles from "./index.css";
 
@@ -17,10 +17,7 @@ const useClapAnimation = ({ clapEl, countEl, clapTotalEl }) => {
   );
 
   useLayoutEffect(() => {
-    if (!clapEl || !countEl || !clapTotalEl) {
-      return;
-    }
-
+    if (!clapEl || !countEl || !clapTotalEl) return;
     const tlDuration = 300;
     const scaleButton = new mojs.Html({
       el: clapEl,
@@ -37,7 +34,7 @@ const useClapAnimation = ({ clapEl, countEl, clapTotalEl }) => {
       children: {
         shape: "polygon",
         radius: { 6: 0 },
-        stroke: "rgba(211,54,0,0.5)",
+        stroke: "rgba(211, 54, 0, 0.5)",
         strokeWidth: 2,
         angle: 210,
         delay: 30,
@@ -54,7 +51,7 @@ const useClapAnimation = ({ clapEl, countEl, clapTotalEl }) => {
       duration: tlDuration,
       children: {
         shape: "circle",
-        fill: "rgba(149,165,166,0.5)",
+        fill: "rgba(149, 165, 166, 0.5)",
         delay: 30,
         speed: 0.2,
         radius: { 3: 0 },
@@ -97,7 +94,6 @@ const useClapAnimation = ({ clapEl, countEl, clapTotalEl }) => {
     ]);
     setAnimationTimeline(newAnimationTimeline);
   }, [clapEl, countEl, clapTotalEl]);
-
   return animationTimeline;
 };
 
@@ -107,7 +103,6 @@ const MediumClap = () => {
   const { count, countTotal, isClicked } = clapState;
 
   const [{ clapRef, clapCountRef, clapTotalRef }, setRefState] = useState({});
-
   const setRef = useCallback((node) => {
     setRefState((prevRefState) => ({
       ...prevRefState,
@@ -132,7 +127,6 @@ const MediumClap = () => {
           : prevState.countTotal,
     }));
   };
-
   return (
     <button
       ref={setRef}
@@ -165,6 +159,7 @@ const ClapIcon = ({ isClicked }) => {
     </span>
   );
 };
+
 const ClapCount = ({ count, setRef }) => {
   return (
     <span ref={setRef} data-refkey="clapCountRef" className={styles.count}>
@@ -188,5 +183,4 @@ const CountTotal = ({ countTotal, setRef }) => {
 const Usage = () => {
   return <MediumClap />;
 };
-
 export default Usage;
